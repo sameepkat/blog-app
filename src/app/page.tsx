@@ -6,10 +6,10 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const isFirstTime = !localStorage.getItem("hasVisited");
+    const isLoggedIn = !localStorage.getItem("isLoggedIn");
 
-    if (isFirstTime) {
-      localStorage.setItem("hasVisited", "true");
+    if (isLoggedIn) {
+      // localStorage.setItem("hasVisited", "true");
       router.push("/signup");
     } else {
       router.push("/blogs");

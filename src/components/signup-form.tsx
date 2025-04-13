@@ -1,18 +1,44 @@
+"use client";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
+
+  const handleSubmit = () => {
+    const name = nameRef.current?.value || "";
+    const email = emailRef.current?.value || "";
+    const password = passwordRef.current?.value || "";
+
+    const data = { name, email, password };
+    localStorage.setItem("user", JSON.stringify(data));
+
+    router.push("/login");
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 ">
-          <form className="p-6 md:p-8">
+          <form
+            className="p-6 md:p-8"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+          >
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Sign Up</h1>
@@ -22,7 +48,13 @@ export function RegisterForm({
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="email">Name</Label>
-                <Input id="name" type="text" placeholder="John Doe" required />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  required
+                  ref={nameRef}
+                />
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
@@ -30,6 +62,7 @@ export function RegisterForm({
                   id="email"
                   type="email"
                   placeholder="random@example.com"
+                  ref={emailRef}
                   required
                 />
               </div>
@@ -37,14 +70,19 @@ export function RegisterForm({
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  ref={passwordRef}
+                />
               </div>
               <Button type="submit" className="w-full">
                 Register
               </Button>
               <div className="text-center text-sm">
                 Already have an account?{"  "}
-                <a href="#" className="underline underline-offset-4">
+                <a href="/login" className="underline underline-offset-4">
                   Log In
                 </a>
               </div>
@@ -52,10 +90,6 @@ export function RegisterForm({
           </form>
         </CardContent>
       </Card>
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
-      </div>
     </div>
   );
 }
