@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useBlogStore } from "@/lib/store/blogsStore";
 export default function Blogs() {
-  const [blogs, setBlogs] = useState<string | null>(null);
+  const setBlogs = useBlogStore((state) => state.setBlog);
   useEffect(() => {
     const blogsFromStorage = localStorage.getItem("blogs");
-    setBlogs(blogsFromStorage);
-  }, []);
+    if (blogsFromStorage) setBlogs(blogsFromStorage);
+  }, [setBlogs]);
+  const blogs = useBlogStore((state) => state.blog);
   return (
     <div className="">
       <div className="">{blogs}</div>
