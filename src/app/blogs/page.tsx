@@ -1,10 +1,14 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 export default function Blogs() {
+  const [blogs, setBlogs] = useState<string | null>(null);
+  useEffect(() => {
+    const blogsFromStorage = localStorage.getItem("blogs");
+    setBlogs(blogsFromStorage);
+  }, []);
   return (
     <div className="">
-      <div className="font-bold p-2 m-2">Blogs Page</div>
-      <Button onClick={() => console.log("Clicked")}>Click me</Button>
+      <div className="">{blogs}</div>
     </div>
   );
 }
