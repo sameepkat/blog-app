@@ -1,6 +1,7 @@
 "use client";
 import type { BlogInterface } from "@/lib/store/blogsStore";
 import { useBlogStore } from "@/lib/store/blogsStore";
+import Link from "next/link";
 
 export default function Nav() {
   const blogs: BlogInterface[] = useBlogStore((state) => state.blogs);
@@ -11,14 +12,16 @@ export default function Nav() {
 
   return (
     <aside className="bg-gray-100 p-4 h-screen flex flex-col gap-10 overflow-y-scroll">
-      {sortedBlogs.map((blog, _) => (
-        <p
-          key={blog.title}
-          className="font-semibold text-center cursor-pointer hover:underline"
-        >
-          {blog.title}
-        </p>
-      ))}
+      <div className="space-y-4">
+        {sortedBlogs.map((blog, index) => (
+          <div key={blog.title} className="border-b py-4">
+            <Link href={`/blogs/${index}`}>
+              <h2 className="font-semibold hover:underline">{blog.title}</h2>
+            </Link>
+            <p className="text-gray-500 text-sm">{blog.author}</p>
+          </div>
+        ))}
+      </div>
     </aside>
   );
 }

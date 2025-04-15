@@ -9,7 +9,6 @@ export default function Home() {
     const isLoggedIn = !localStorage.getItem("isLoggedIn");
 
     if (isLoggedIn) {
-      // localStorage.setItem("hasVisited", "true");
       router.push("/signup");
     } else {
       router.push("/blogs");
