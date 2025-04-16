@@ -101,7 +101,7 @@ export default function Add({
                 <div className="flex items-center">
                   <Label htmlFor="image">Image (Optional)</Label>
                 </div>
-                <Input id="image" type="text" placeholder="/path/to/image" />
+                <Input id="image" type="text" placeholder="image name" />
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center">

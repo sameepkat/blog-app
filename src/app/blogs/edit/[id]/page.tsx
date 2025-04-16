@@ -124,7 +124,7 @@ export default function Edit({
                 <Input
                   id="image"
                   type="text"
-                  placeholder="/path/to/image"
+                  placeholder="image name"
                   ref={imageRef}
                 />
               </div>
