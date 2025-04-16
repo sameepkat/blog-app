@@ -19,11 +19,7 @@ import { useBlogStore } from "@/lib/store/blogsStore";
 import type { BlogInterface } from "@/lib/store/blogsStore";
 import { toast } from "sonner";
 
-export default function Edit({
-  className,
-  searchParams,
-  ...props
-}: React.ComponentProps<"div"> & { searchParams?: any }) {
+export default function Edit() {
   const { id } = useParams();
   const titleRef = useRef<HTMLInputElement>(null);
   const authorRef = useRef<HTMLInputElement>(null);
@@ -71,7 +67,7 @@ export default function Edit({
 
       const updatedBlogs = storedBlogs.map(
         (blog: BlogInterface, index: number) =>
-          index === parseInt(id as string) ? updatedBlog : blog
+          index === parseInt(id as string) ? updatedBlog : blog,
       );
       localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
       setBlogError(false);
@@ -85,7 +81,7 @@ export default function Edit({
     }
   };
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-6")}>
       {blogError && (
         <Alert variant="destructive">
           <ExclamationTriangleIcon className="h-4 w-4" />

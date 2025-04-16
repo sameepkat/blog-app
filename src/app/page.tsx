@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 
-export default function Home() {
+export default function Home({ searchParams }: { searchParams?: any }) {
   const router = useRouter();
 
   useEffect(() => {

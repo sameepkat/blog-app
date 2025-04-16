@@ -18,11 +18,7 @@ import { useBlogStore } from "@/lib/store/blogsStore";
 import type { BlogInterface } from "@/lib/store/blogsStore";
 import { toast } from "sonner";
 
-export default function Add({
-  className,
-  searchParams,
-  ...props
-}: React.ComponentProps<"div"> & { searchParams?: any }) {
+export default function Add({ searchParams }: { searchParams?: any }) {
   const titleRef = useRef<HTMLInputElement>(null);
   const authorRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
@@ -64,7 +60,7 @@ export default function Add({
     }
   };
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-5")}>
       {blogError && (
         <Alert variant="destructive">
           <ExclamationTriangleIcon className="h-4 w-4" />
