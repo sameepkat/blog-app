@@ -35,16 +35,21 @@ export default function Edit({
 
   useEffect(() => {
     const storedBlogs = JSON.parse(localStorage.getItem("blogs") || "[]");
-    const blog = storedBlogs[parseInt(id as string)];
+    const blogIndex = parseInt(id as string);
+    if (isNaN(blogIndex) || blogIndex < 0 || blogIndex >= storedBlogs.length) {
+      router.push("/blogs/edit");
+      return;
+    }
+    const blog = storedBlogs[blogIndex];
     if (blog) {
       setBlogToEdit(blog);
 
       if (titleRef.current) titleRef.current.value = blog.title;
-      if (authorRef.current) authorRef.current.value = blog.title;
-      if (imageRef.current) imageRef.current.value = blog.title;
-      if (contentRef.current) contentRef.current.value = blog.title;
+      if (authorRef.current) authorRef.current.value = blog.author;
+      if (imageRef.current) imageRef.current.value = blog.image || "";
+      if (contentRef.current) contentRef.current.value = blog.content;
     }
-  }, [id]);
+  }, [id, router]);
 
   const handleSubmit = () => {
     const title = titleRef.current?.value || "";

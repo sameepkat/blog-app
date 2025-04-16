@@ -11,7 +11,7 @@ export default function Blogs() {
   return (
     <div className="space-y-4">
       {sortedBlogs.map((blog, index) => (
-        <div key={blog.title} className="border-b py-4">
+        <div key={index} className="border-b py-4">
           <Link href={`/blogs/${index}`}>
             <h2 className="text-xl font-semibold hover:underline">
               {blog.title}

@@ -17,7 +17,7 @@ export default function Nav() {
     <aside className="bg-gray-100 p-4 h-screen flex flex-col gap-10 overflow-y-scroll ">
       <div className="space-y-4">
         {sortedBlogs.map((blog, index) => (
-          <div key={blog.title} className="border-b py-4">
+          <div key={index} className="border-b py-4">
             <Link href={`/blogs/${index}`}>
               <h2
                 className={clsx(

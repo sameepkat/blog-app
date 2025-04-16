@@ -75,7 +75,7 @@ export default function BlogLayout({
         {" "}
         {children}
       </main>
-      <div className="hidden md:block col-span-2">
+      <div className="hidden md:block col-span-1">
         <Aside />
       </div>
     </div>
