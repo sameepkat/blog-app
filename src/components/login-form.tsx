@@ -43,7 +43,7 @@ export function LoginForm({
       {loginError && (
         <Alert variant="destructive">
           <ExclamationTriangleIcon className="h-4 w-4" />
-          <AlertTitle>Logind Failed</AlertTitle>
+          <AlertTitle>Login Failed</AlertTitle>
           <AlertDescription>
             Invalid email or password. Please try again.
           </AlertDescription>
@@ -86,7 +86,7 @@ export function LoginForm({
                 />
               </div>
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="cursor-pointer w-full">
                   Login
                 </Button>
               </div>

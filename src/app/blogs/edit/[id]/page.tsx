@@ -31,7 +31,7 @@ export default function Edit({
   const [blogError, setBlogError] = useState(false);
   const [blogToEdit, setBlogToEdit] = useState<BlogInterface | null>(null);
   const router = useRouter();
-  const addBlog = useBlogStore((state) => state.addBlog);
+  const updateBlog = useBlogStore((state) => state.updateBlog);
 
   useEffect(() => {
     const storedBlogs = JSON.parse(localStorage.getItem("blogs") || "[]");
@@ -75,7 +75,7 @@ export default function Edit({
       localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
       setBlogError(false);
 
-      addBlog(updatedBlog);
+      updateBlog(parseInt(id as string), updatedBlog);
       router.push("/blogs");
     } else {
       setBlogError(true);
