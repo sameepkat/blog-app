@@ -30,7 +30,7 @@ export function LoginForm({
     const password = passwordRef.current?.value || "";
 
     const storedData = JSON.parse(localStorage.getItem("user") as string);
-
+    if (!storedData) return;
     if (email === storedData.email && password === storedData.password) {
       localStorage.setItem("isLoggedIn", "true");
       router.push("/blogs");

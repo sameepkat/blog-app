@@ -1,5 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,23 +13,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useBlogStore } from "@/lib/store/blogsStore";
 import type { BlogInterface } from "@/lib/store/blogsStore";
 
-export default function Add({
+export default function Edit({
   className,
   searchParams,
   ...props
 }: React.ComponentProps<"div"> & { searchParams?: any }) {
+  const { id } = useParams();
   const titleRef = useRef<HTMLInputElement>(null);
   const authorRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [blogError, setBlogError] = useState(false);
+  const [blogToEdit, setBlogToEdit] = useState<BlogInterface | null>(null);
   const router = useRouter();
   const addBlog = useBlogStore((state) => state.addBlog);
+
+  useEffect(() => {
+    const storedBlogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+    const blog = storedBlogs[parseInt(id as string)];
+    if (blog) {
+      setBlogToEdit(blog);
+
+      if (titleRef.current) titleRef.current.value = blog.title;
+      if (authorRef.current) authorRef.current.value = blog.title;
+      if (imageRef.current) imageRef.current.value = blog.title;
+      if (contentRef.current) contentRef.current.value = blog.title;
+    }
+  }, [id]);
 
   const handleSubmit = () => {
     const title = titleRef.current?.value || "";
@@ -36,26 +52,25 @@ export default function Add({
     const content = contentRef.current?.value || "";
     const image = imageRef.current?.value || "";
 
-    if (title && author && content) {
-      const newBlogObj = {
+    if (title && author && content && blogToEdit) {
+      const storedBlogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+
+      const updatedBlog: BlogInterface = {
+        ...blogToEdit,
+        title,
         author,
         content,
-        date: new Date().toISOString().split("T")[0],
         image,
-        title,
       };
 
-      const storedBlogs = JSON.parse(localStorage.getItem("blogs") || "[]");
-      const updatedBlogs = [...storedBlogs, newBlogObj];
+      const updatedBlogs = storedBlogs.map(
+        (blog: BlogInterface, index: number) =>
+          index === parseInt(id as string) ? updatedBlog : blog
+      );
       localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
       setBlogError(false);
 
-      addBlog(newBlogObj);
-      if (titleRef.current && authorRef.current && contentRef.current) {
-        titleRef.current.value = "";
-        authorRef.current.value = "";
-        contentRef.current.value = "";
-      }
+      addBlog(updatedBlog);
       router.push("/blogs");
     } else {
       setBlogError(true);
@@ -74,7 +89,7 @@ export default function Add({
       )}
       <Card>
         <CardHeader>
-          <CardTitle>Add blog</CardTitle>
+          <CardTitle>Edit blog</CardTitle>
           <CardDescription>
             Enter Title, Author and Content for your new Blog
           </CardDescription>
@@ -101,7 +116,12 @@ export default function Add({
                 <div className="flex items-center">
                   <Label htmlFor="image">Image</Label>
                 </div>
-                <Input id="image" type="text" placeholder="/path/to/image" />
+                <Input
+                  id="image"
+                  type="text"
+                  placeholder="/path/to/image"
+                  ref={imageRef}
+                />
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center">
@@ -117,7 +137,7 @@ export default function Add({
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full cursor-pointer">
-                  Add
+                  Update
                 </Button>
               </div>
             </div>

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 export default function Nav() {
   const router = useRouter();
   return (
-    <nav className="bg-gray-200 pb-4 flex flex-col justify-end h-screen text-center">
+    <nav className="bg-gray-200 pb-4 flex flex-col justify-end h-screen text-center ">
       {" "}
       <ul>
         <li>

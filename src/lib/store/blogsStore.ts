@@ -5,6 +5,7 @@ export interface BlogInterface {
   content: string;
   date: string;
   title: string;
+  image?: string;
 }
 
 interface BlogState {
