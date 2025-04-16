@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useBlogStore } from "@/lib/store/blogsStore";
 import type { BlogInterface } from "@/lib/store/blogsStore";
+import { toast } from "sonner";
 
 export default function Edit({
   className,
@@ -76,6 +77,8 @@ export default function Edit({
       setBlogError(false);
 
       updateBlog(parseInt(id as string), updatedBlog);
+
+      toast.success("Blog updated successfully!");
       router.push("/blogs");
     } else {
       setBlogError(true);

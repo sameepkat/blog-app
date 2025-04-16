@@ -14,6 +14,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function LoginForm({
   className,
@@ -30,7 +31,10 @@ export function LoginForm({
     const password = passwordRef.current?.value || "";
 
     const storedData = JSON.parse(localStorage.getItem("user") as string);
-    if (!storedData) return;
+    if (!storedData) {
+      toast.success("Account not Found. Sign up first");
+      return;
+    }
     if (email === storedData.email && password === storedData.password) {
       localStorage.setItem("isLoggedIn", "true");
       router.push("/blogs");

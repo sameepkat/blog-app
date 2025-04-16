@@ -16,6 +16,7 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useBlogStore } from "@/lib/store/blogsStore";
 import type { BlogInterface } from "@/lib/store/blogsStore";
+import { toast } from "sonner";
 
 export default function Add({
   className,
@@ -56,6 +57,7 @@ export default function Add({
         authorRef.current.value = "";
         contentRef.current.value = "";
       }
+      toast.success("Blog added");
       router.push("/blogs");
     } else {
       setBlogError(true);

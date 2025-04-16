@@ -18,7 +18,7 @@ export default function Edit() {
       {sortedBlogs.map((blog, index) => (
         <Link key={index} href={`/blogs/edit/${index}`}>
           <div className="cursor-pointer rounded-md border border-gray-200 p-5 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white hover:bg-gray-50">
-            <h2 className="text-xl font-semibold hover:text-yellow-600 group-hover:underline">
+            <h2 className="text-xl font-semibold hover:underline hover:scale-101 group-hover:underline">
               {blog.title}
             </h2>
             <p className="text-sm text-gray-500 mt-1">

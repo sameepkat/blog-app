@@ -14,7 +14,8 @@ export default function Blogs() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       {sortedBlogs.map((blog, index) => (
-        <div
+        <Link
+          href={`/blogs/${index}`}
           key={index}
           className="group flex flex-col md:flex-row gap-6 border-b pb-6"
         >
@@ -28,17 +29,15 @@ export default function Blogs() {
             />
           </div>
           <div className="w-full md:w-2/3 space-y-2">
-            <Link href={`/blogs/${index}`}>
-              <h2 className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-200">
-                {blog.title}
-              </h2>
-            </Link>
+            <h2 className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-200 text-underline">
+              {blog.title}
+            </h2>
             <p className="text-sm text-gray-500">
               {blog.author} &middot; {new Date(blog.date).toLocaleDateString()}
             </p>
             <p className="text-gray-600 line-clamp-3">{blog.content}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

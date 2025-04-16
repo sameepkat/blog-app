@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { BlogInterface } from "@/lib/store/blogsStore";
+import Image from "next/image";
 
 export default function BlogPage() {
   const { id } = useParams();
@@ -31,7 +32,15 @@ export default function BlogPage() {
         <span>Author: {blog.date}</span>
       </div>
       <hr className="mb-6" />
-      <p className="text-lg whitespace-pre-wrap">{blog.content}</p>
+      {blog.image && (
+        <Image
+          src={`/images/${blog.image}`}
+          alt={blog.image}
+          width={window.innerWidth}
+          height={300}
+        />
+      )}
+      <p className="text-lg whitespace-pre-wrap my-10">{blog.content}</p>
     </div>
   );
 }

@@ -1,6 +1,19 @@
 "use client";
 import type { BlogInterface } from "@/lib/store/blogsStore";
 import { useBlogStore } from "@/lib/store/blogsStore";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function Delete() {
   const blogs: BlogInterface[] = useBlogStore((state) => state.blogs);
@@ -36,12 +49,33 @@ export default function Delete() {
               {blog.author} &middot; {new Date(blog.date).toLocaleDateString()}
             </p>
           </div>
-          <button
-            onClick={() => handleDelete(index)}
-            className="text-sm px-4 py-2 bg-red-600 cursor-pointer text-white rounded hover:bg-red-700 transition-colors duration-200"
-          >
-            Delete
-          </button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button className="text-sm px-4 py-2  cursor-pointer  rounded  transition-colors duration-200">
+                Delete
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  className=" cursor-pointer"
+                  onClick={() => {
+                    handleDelete(index);
+                    toast.success("Deleted successfully.");
+                  }}
+                >
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       ))}
     </div>
